@@ -2,6 +2,7 @@
 /*
  * triggeredAutocomplete (jQuery UI autocomplete widget)
  * 2012 by Hawkee.com (hawkee@gmail.com)
+ * 2013 by Augusto Destrero (a.destrero@gmail.com)
  *
  * Version 1.4.5
  * 
