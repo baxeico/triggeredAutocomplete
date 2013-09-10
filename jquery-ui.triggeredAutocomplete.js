@@ -258,7 +258,12 @@
 				contents = contents.replace(regex, trigger+'['+this.id_map[key]+']');
 				if(old_contents == contents) delete this.id_map[key];
 			}
-			$(this.options.hidden).val(contents);
+			if (typeof this.options.hidden != 'undefined') {
+                $(this.options.hidden).val(contents);
+            }
+            if (typeof this.options.data != 'undefined') {
+                this.element.data(this.options.data, this.id_map);
+            }
 			this.element.scrollTop(top);
 		}
 
