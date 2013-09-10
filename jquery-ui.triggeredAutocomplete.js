@@ -72,7 +72,13 @@
 				start = start.substring(0, start.lastIndexOf(self.options.trigger));
 
 				var top = self.element.scrollTop();
-				this.value = start + self.options.trigger+ui.item.label+' ' + end;
+                var newvalue = start + self.options.trigger + ui.item.label;
+                if (end.charAt(0) != ' ') {
+                    newvalue += ' ';
+                }
+                var newcaretposition = newvalue.length + 1;
+                newvalue += end;
+				this.value = newvalue;
 				self.element.scrollTop(top);
 
 				// Create an id map so we can create a hidden version of this string with id's instead of labels.
@@ -81,13 +87,12 @@
 				self.updateHidden();
 
 				/** Places the caret right after the inserted item. */
-				var index = start.length + self.options.trigger.length + ui.item.label.length + 2;
 				if (this.createTextRange) {
 					var range = this.createTextRange();
-					range.move('character', index);
+					range.move('character', newcaretposition);
 					range.select();
 				} else if (this.setSelectionRange) {
-					this.setSelectionRange(index, index);
+					this.setSelectionRange(newcaretposition, newcaretposition);
 				}
 				
 				return false;
