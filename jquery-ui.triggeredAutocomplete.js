@@ -48,9 +48,14 @@
 			});
 
 			// Check for the id_map as a data attribute.  This is for editing.
-
-			var id_map_string = this.element.data(self.options.data);
-			if (id_map_string) this.id_map = jQuery.parseJSON(id_map_string);
+            try {
+                var id_map_string = this.element.data(self.options.data);
+                if (id_map_string && id_map_string != '') {
+                    this.id_map = jQuery.parseJSON(id_map_string);
+                }
+            } catch(err) {
+                this.id_map = new Object();
+            }
 
 			this.ac = $.ui.autocomplete.prototype;
 			this.ac._create.apply(this, arguments);
