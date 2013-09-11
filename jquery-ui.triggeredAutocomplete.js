@@ -47,10 +47,10 @@
 				}
 			});
 
-			// Check for the id_map as an attribute.  This is for editing.
+			// Check for the id_map as a data attribute.  This is for editing.
 
-			var id_map_string = this.element.attr('id_map');
-			if(id_map_string) this.id_map = jQuery.parseJSON(id_map_string);
+			var id_map_string = this.element.data(self.options.data);
+			if (id_map_string) this.id_map = jQuery.parseJSON(id_map_string);
 
 			this.ac = $.ui.autocomplete.prototype;
 			this.ac._create.apply(this, arguments);
@@ -131,9 +131,9 @@
 				this.search( null, event );
 				return;
 			}
-			if ( this.menu.first() && /^previous/.test(direction) ||
-					this.menu.last() && /^next/.test(direction) ) {
-				this.menu.deactivate();
+			if ( this.menu.isFirstItem() && /^previous/.test(direction) ||
+					this.menu.isLastItem() && /^next/.test(direction) ) {
+				this.menu.disable();
 				return;
 			}
 			this.menu[ direction ]( event );
@@ -154,6 +154,12 @@
 
 			var check_contents = contents.substring(contents.lastIndexOf(this.options.trigger) - 1, cursorPos);
 			var regex = new RegExp('\\B\\'+this.options.trigger+'([\\w\\-]+)');
+            var only_trigger_regex = new RegExp('\\B\\' + this.options.trigger);
+            
+            // Close the suggestion list if there's only the trigger
+            if (check_contents.match(only_trigger_regex)) {
+                this.close();
+            }
 
 			if (contents.indexOf(this.options.trigger) >= 0 && check_contents.match(regex)) {
 
